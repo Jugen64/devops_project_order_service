@@ -80,7 +80,7 @@ index.patch('/orders/:id', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 index.listen(PORT, () => {
     console.log(`Order service running on port ${PORT}`);
 });
