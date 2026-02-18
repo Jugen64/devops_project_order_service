@@ -32,7 +32,7 @@ pipeline {
         stage('Container Build') {
             steps {
                 sh '''
-                docker build -t product-service:${BUILD_NUMBER} .
+                docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
                 '''
             }
         }
@@ -54,7 +54,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 sh '''
-                trivy image --exit-code 1 --severity CRITICAL product-service:${BUILD_NUMBER}
+                trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}:${BUILD_NUMBER}
                 '''
             }
         }  
