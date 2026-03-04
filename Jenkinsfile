@@ -36,6 +36,18 @@ pipeline {
                 '''
             }
         }
+
+        stage('Security Scan') {
+            steps {
+                sh '''
+                docker pull aquasec/trivy:latest
+
+                docker run --rm \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    aquasec/trivy:latest image ${IMAGE_NAME}:${BUILD_NUMBER}
+                '''
+            }
+        }
         stage('Container Push') {
             steps {
                 withCredentials([usernamePassword(
@@ -51,16 +63,6 @@ pipeline {
                 }
             }
         }
-        stage('Security Scan') {
-            steps {
-                sh '''
-                docker pull aquasec/trivy:latest
-
-                docker run --rm \
-                    -v /var/run/docker.sock:/var/run/docker.sock \
-                    aquasec/trivy:latest image ${IMAGE_NAME}:${BUILD_NUMBER}
-                '''
-            }
-        }
+        
     }
 }
