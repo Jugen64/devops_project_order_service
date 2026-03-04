@@ -8,7 +8,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "product-service"
+        IMAGE_NAME = "order-service"
         IMAGE_TAG  = "${BUILD_NUMBER}"
     }
 
