@@ -32,7 +32,7 @@ pipeline {
         stage('Container Build') {
             steps {
                 sh '''
-                docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
+                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                 '''
             }
         }
@@ -44,7 +44,7 @@ pipeline {
 
                 docker run --rm \
                     -v /var/run/docker.sock:/var/run/docker.sock \
-                    aquasec/trivy:latest image ${IMAGE_NAME}:${BUILD_NUMBER}
+                    aquasec/trivy:latest image ${IMAGE_NAME}:${IMAGE_TAG}
                 '''
             }
         }
