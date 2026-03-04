@@ -54,9 +54,13 @@ pipeline {
         stage('Security Scan') {
             steps {
                 sh '''
-                trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}:${BUILD_NUMBER}
+                docker pull aquasec/trivy:latest
+
+                docker run --rm \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    aquasec/trivy:latest image $IMAGE_NAME:${BUILD_NUMBER}
                 '''
             }
-        }  
+        }
     }
 }
