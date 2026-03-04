@@ -45,8 +45,8 @@ pipeline {
                 )]) {
                     sh '''
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                    docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
-                    docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
+                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} $DOCKER_USER/${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push $DOCKER_USER/${IMAGE_NAME}:${IMAGE_TAG}
                     '''
                 }
             }
@@ -58,7 +58,7 @@ pipeline {
 
                 docker run --rm \
                     -v /var/run/docker.sock:/var/run/docker.sock \
-                    aquasec/trivy:latest image $IMAGE_NAME:${BUILD_NUMBER}
+                    aquasec/trivy:latest image ${IMAGE_NAME}:${BUILD_NUMBER}
                 '''
             }
         }
